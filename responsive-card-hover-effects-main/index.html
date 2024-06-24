@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  
+  <title>Responsive card hover effects - Bedimcode</title>
+</head>
+<body>
+  <div class="card">
+    <div class="card__container" style="display: flex; align-items: center; justify-content: center;">
+      <article class="card__article">
+        <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 2rem;">
+        <div class="card__data" style="  margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;">
+          <img src="assets/img/default.png" alt="card image" class="card__img" id="badge-img">
+          <h1 class="card__title">Loading...</h1>
+          <p class="card__description">Loading...</p>
+          <div id="qrcode" style="  margin-top: 1rem;
+          border: 3px solid white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 128px; /* Adjust width as needed */
+          height: 128px;"></div> <!-- QR Code container -->
+        </div>
+        
+        <div class="card__shapes">
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+          <span class="card__shape"></span>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBzjPQQH6obaKEVTpxwftTs8Gw7rhPDO8w",
+    authDomain: "isrc-badges.firebaseapp.com",
+    databaseURL: "https://isrc-badges-default-rtdb.firebaseio.com",
+    projectId: "isrc-badges",
+    storageBucket: "isrc-badges.appspot.com",
+    messagingSenderId: "830540634527",
+    appId: "1:830540634527:web:2ff608e443964fe36385aa",
+    measurementId: "G-ZRLDNGKGG4"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
+  
+    function getParameterByName(name) {
+      const url = window.location.href;
+      const name1 = name.replace(/[\[\]]/g, '\\$&');
+      const regex = new RegExp('[?&]' + name1 + '(=([^&#]*)|&|#|$)');
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      const name1 = getParameterByName('name1');
+  
+      if (name1) {
+        // Fetch data from Firebase
+        const dbRef = ref(database);
+        get(child(dbRef, `detail/${name1}`)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            document.querySelector('.card__title').innerText = data.name;
+            document.querySelector('.card__description').innerText = data.designation;
+  
+            // Set badge image based on rank
+            let badgeImgSrc;
+            switch (parseInt(data.rank)) {
+              case 1:
+                badgeImgSrc = 'assets/img/badge1.png';
+                break;
+              case 2:
+                badgeImgSrc = 'assets/img/badge2.png';
+                break;
+              case 3:
+                badgeImgSrc = 'assets/img/badge3.png';
+                break;
+              default:
+                badgeImgSrc = 'assets/img/default.png';
+            }
+            document.getElementById('badge-img').src = badgeImgSrc;
+  
+            // Generate QR code for the current URL with a white border and black background
+            const qrcode = new QRCode(document.getElementById("qrcode"), {
+              text: window.location.href,
+              width: 128,
+              height: 128,
+              colorDark: "#000000",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.H,
+              margin: 2 // White border around the QR code
+            });
+          } else {
+            console.error("No data available for name1: " + name1);
+          }
+        }).catch((error) => {
+          console.error("Error fetching data from Firebase: " + error);
+        });
+      } else {
+        console.error("name1 parameter not found in URL");
+      }
+    });
+  </script>
+  
+</body>
+</html>
