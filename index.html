@@ -14,21 +14,13 @@
   <div class="card">
     <div class="card__container" style="display: flex; align-items: center; justify-content: center;">
       <article class="card__article">
-        <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 2rem;">
-        <div class="card__data" style="  margin-top: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;">
+        <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 1rem;">
+        <div class="card__data" style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
           <img src="assets/img/default.png" alt="card image" class="card__img" id="badge-img">
+          <h2 class="card__rank card__img" id="badge-rank"></h2>
           <h1 class="card__title">Loading...</h1>
           <p class="card__description">Loading...</p>
-          <div id="qrcode" style="  margin-top: 1rem;
-          border: 3px solid white;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 128px; /* Adjust width as needed */
-          height: 128px;"></div> <!-- QR Code container -->
+          <div id="qrcode" style="margin-top: 1rem; border: 3px solid white; display: flex; justify-content: center; align-items: center; width: 128px; height: 128px; border-radius: 3px;"></div> <!-- QR Code container -->
         </div>
         
         <div class="card__shapes">
@@ -54,14 +46,14 @@
     
     // Your web app's Firebase configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyBzjPQQH6obaKEVTpxwftTs8Gw7rhPDO8w",
-    authDomain: "isrc-badges.firebaseapp.com",
-    databaseURL: "https://isrc-badges-default-rtdb.firebaseio.com",
-    projectId: "isrc-badges",
-    storageBucket: "isrc-badges.appspot.com",
-    messagingSenderId: "830540634527",
-    appId: "1:830540634527:web:2ff608e443964fe36385aa",
-    measurementId: "G-ZRLDNGKGG4"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "isrc-badges.firebaseapp.com",
+      databaseURL: "https://isrc-badges-default-rtdb.firebaseio.com",
+      projectId: "isrc-badges",
+      storageBucket: "isrc-badges.appspot.com",
+      messagingSenderId: "830540634527",
+      appId: "1:830540634527:web:2ff608e443964fe36385aa",
+      measurementId: "G-ZRLDNGKGG4"
     };
   
     // Initialize Firebase
@@ -96,15 +88,23 @@
             switch (parseInt(data.rank)) {
               case 1:
                 badgeImgSrc = 'assets/img/badge1.png';
+                document.getElementById('badge-rank').innerText = 'Gold';
+                document.getElementById('badge-rank').style.color = '#FEBF3D';
                 break;
               case 2:
                 badgeImgSrc = 'assets/img/badge2.png';
+                document.getElementById('badge-rank').innerText = 'Silver';
+                document.getElementById('badge-rank').style.color = '#BAC2CD';
                 break;
               case 3:
                 badgeImgSrc = 'assets/img/badge3.png';
+                document.getElementById('badge-rank').innerText = 'Bronze';
+                document.getElementById('badge-rank').style.color = '#EDB281';
                 break;
               default:
                 badgeImgSrc = 'assets/img/default.png';
+                document.getElementById('badge-rank').innerText = 'Participant';
+                document.getElementById('badge-rank').style.color = '#000000';
             }
             document.getElementById('badge-img').src = badgeImgSrc;
   
@@ -113,7 +113,7 @@
               text: window.location.href,
               width: 128,
               height: 128,
-              colorDark: "#000000",
+              colorDark: "#111322",
               colorLight: "#ffffff",
               correctLevel: QRCode.CorrectLevel.H,
               margin: 2 // White border around the QR code
