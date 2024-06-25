@@ -1,207 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- CSS -->
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  
-  <!-- HTML to PDF Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-<style>
-  .mk{
-    
-    display: inline-block;
-                outline: 0;
-                border: 0;
-                font-size: 20px;
-                font-weight: 500;
-                color: #fff;
-                cursor: pointer;
-                background-image: linear-gradient(to right,#e052a0,#f15c41)!important;
-                border-radius: 3px;
-                padding: 16px 18px 15px;
-                white-space: nowrap;
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --title-color: #fff;
+  --text-color: hsl(235, 20%, 57%);
+  --shape-gradient: linear-gradient(90deg, hsl(300, 76%, 60%), hsl(57, 81%, 60%));
+  --body-gradient: linear-gradient(180deg, hsl(22, 100%, 84%), hsl(265, 100%, 80%));
+  --container-color: hsl(235, 32%, 10%);
+  /*========== Font and typography ==========*/
+  --body-font: "Poppins", sans-serif;
+  --biggest-font-size: 2.25rem;
+  --normal-font-size: 1.25rem;
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  color: var(--text-color);
+  background: var(--body-gradient);
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Existing CSS */
+
+/*=============== CARD ===============*/
+.card {
+  display: grid;
+  place-items: center;
+  background: none;
+  padding-block: 4.5rem;
+}
+.card__container {
+  margin-inline: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 2rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.card__article {
+  position: relative;
+  background-color: var(--container-color);
+  padding: 3.5rem;
+  border-radius: 2rem;
+  text-align: center;
+  box-shadow: 0 20px 24px hsla(235, 32%, 15%, 0.2);
+  overflow: hidden;
+  height: auto; /* Default height, adjust as needed */
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.card__img {
+  width: 250px;
+  margin-bottom: 1rem;
+  animation: float-img 2.5s ease-in-out infinite;
+}
+
+.card__title {
+  color: var(--title-color);
+  font-size: var(--biggest-font-size);
+  line-height: 100%;
+  margin-bottom: 2rem;
+}
+
+.card__description {
+  font-size: var(--normal-font-size);
+}
+
+.card__data {
+  position: relative;
+  z-index: 10;
+}
+
+.card__shapes {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  row-gap: 2.5rem;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.card__shape {
+  display: block;
+  width: 260px;
+  height: 40px;
+  background: var(--shape-gradient);
+  border-radius: 4rem;
+  transform: rotate(-24deg);
+  opacity: 0;
+}
+
+.card__shape:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.card__shape:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.card__shape:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.card__shape:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.card__shape:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.card__shape:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.card__shape:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
+.card__shape:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Animation img */
+@keyframes float-img {
+  0% {
+    transform: translateY(0);
   }
-                .mk:hover {
-                    background-color: #e6375a;
-                    background-image: none!important;
-                }
-                
-                #download-pdf-container {
-  display: none; /* Hide by default */
+  50% {
+    transform: translateY(-0.75rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Animation shape */
+.card__article:hover .card__shape {
+  animation-name: shape-animate;
+  animation-duration: 0.8s;
+  animation-iteration-count: 2;
+}
+
+@keyframes shape-animate {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.1;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (max-width: 340px) {
+  .card__container {
+    margin-inline: 1rem;
+  }
+  .card__article {
+    padding: 1.5rem;
+    max-width: 90%;
+    margin-bottom: 2rem;
+    height: 80vh; /* Set height to 80% of viewport height */
+  }
+  .card__img {
+    width: 160px;
+  }
+  .card__title {
+    font-size: 2rem;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 440px) {
+  .card__container {
+    grid-template-columns: 328px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  #download-pdf-container {
-    display: flex;
+  .card__article {
+    margin: 10% auto; /* 10% margin from all sides and centered */
+    overflow: hidden; /* Ensure no scrolling */
+    padding: 1.5rem; /* Adjust padding as needed */
   }
 }
-</style>
-  <title>Responsive card hover effects - Bedimcode</title>
-</head>
-<body>
-  <div class="card">
-    <div class="card__container" style="display: flex; align-items: center; justify-content: center;">
-      <article class="card__article">
-        <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 1rem;">
-        <div class="card__data" style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
-          <img src="assets/img/badge1.png" alt="card image" class="card__img" id="badge-img">
-          <h2 class="card__rank card__img" id="badge-rank"></h2>
-          <h1 class="card__title">Loading...</h1>
-          <p class="card__description">Loading...</p>
-          <div id="qrcode" style="margin-top: 1rem; border: 3px solid white; display: flex; justify-content: center; align-items: center; width: 128px; height: 128px; border-radius: 3px;"></div> <!-- QR Code container -->
-        </div>
-        
-        <div class="card__shapes">
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-          <span class="card__shape"></span>
-        </div>
-      </article>
-    </div>
-    <div id="download-pdf-container" style="position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center;">
-      <button id="download-pdf-bottom" class="mk">Download PDF</button>
-    </div>
-  </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "isrc-badges.firebaseapp.com",
-      databaseURL: "https://isrc-badges-default-rtdb.firebaseio.com",
-      projectId: "isrc-badges",
-      storageBucket: "isrc-badges.appspot.com",
-      messagingSenderId: "830540634527",
-      appId: "1:830540634527:web:2ff608e443964fe36385aa",
-      measurementId: "G-ZRLDNGKGG4"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const database = getDatabase(app);
-  
-    function getParameterByName(name) {
-      const url = window.location.href;
-      const name1 = name.replace(/[\[\]]/g, '\\$&');
-      const regex = new RegExp('[?&]' + name1 + '(=([^&#]*)|&|#|$)');
-      const results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-  
-    document.addEventListener("DOMContentLoaded", function() {
-      const name1 = getParameterByName('name1');
-  
-      if (name1) {
-        // Fetch data from Firebase
-        const dbRef = ref(database);
-        get(child(dbRef, `detail/${name1}`)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            document.querySelector('.card__title').innerText = data.name;
-            document.querySelector('.card__description').innerText = data.designation;
-  
-            // Set badge image based on rank
-            let badgeImgSrc;
-            switch (parseInt(data.rank)) {
-              case 1:
-                badgeImgSrc = 'assets/img/badge1.png';
-                document.getElementById('badge-rank').innerText = 'Gold';
-                document.getElementById('badge-rank').style.color = '#FEBF3D';
-                break;
-              case 2:
-                badgeImgSrc = 'assets/img/badge2.png';
-                document.getElementById('badge-rank').innerText = 'Silver';
-                document.getElementById('badge-rank').style.color = '#BAC2CD';
-                break;
-              case 3:
-                badgeImgSrc = 'assets/img/badge3.png';
-                document.getElementById('badge-rank').innerText = 'Bronze';
-                document.getElementById('badge-rank').style.color = '#EDB281';
-                break;
-              default:
-                badgeImgSrc = 'assets/img/default.png';
-                document.getElementById('badge-rank').innerText = 'Participant';
-                document.getElementById('badge-rank').style.color = '#000000';
-            }
-            document.getElementById('badge-img').src = badgeImgSrc;
-  
-            // Generate QR code for the current URL with a white border and black background
-            const qrcode = new QRCode(document.getElementById("qrcode"), {
-              text: window.location.href,
-              width: 128,
-              height: 128,
-              colorDark: "#111322",
-              colorLight: "#ffffff",
-              correctLevel: QRCode.CorrectLevel.H,
-              margin: 2 // White border around the QR code
-            });
-          } else {
-            console.error("No data available for name1: " + name1);
-          }
-        }).catch((error) => {
-          console.error("Error fetching data from Firebase: " + error);
-        });
-      } else {
-        console.error("name1 parameter not found in URL");
-      }
-    });
 
-    function downloadPDF() {
-  const element = document.querySelector('.card__article');
-  const options = {
-    filename: 'card_article.pdf',
-    jsPDF: { format: 'a4', orientation: 'portrait' },
-    html2canvas: { scale: 1 },
-    margin: 10,
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-    image: { type: 'jpeg', quality: 0.98 },
-    jsPDFCustomizer: function (doc) {
-      const width = doc.internal.pageSize.width;
-      const height = doc.internal.pageSize.height;
-      
-      // Increase text size
-      doc.setFontSize(16); // Example, adjust as needed
-      
-      // Scale the QR code to be larger
-      const qrCodeElement = document.getElementById("qrcode canvas");
-      const qrCodeScale = 2; // Increase QR code size
-      doc.addImage(qrCodeElement.toDataURL('image/jpeg', 1.0), 'JPEG', 50, 160, 100 * qrCodeScale, 100 * qrCodeScale);
-      
-      // Append "Welcome to ISRC" text at the end
-      doc.setFontSize(14); // Example, adjust as needed
-      doc.text('Welcome to ISRC', width / 2, height - 20, { align: 'center' });
-    }
-  };
-
-  html2pdf()
-    .set(options)
-    .from(element)
-    .save();
+/* For large devices */
+@media screen and (min-width: 1024px) {
+  .card {
+    height: 100vh;
+  }
+  .card__container {
+    grid-template-columns: repeat(3, 328px);
+    column-gap: 2rem;
+  }
 }
-
-
-// Event listener for the download button
-document.getElementById('download-pdf-bottom').addEventListener('click', downloadPDF);
-
-  </script>
-  
-</body>
-</html>
