@@ -66,9 +66,9 @@ img {
   text-align: center;
   box-shadow: 0 20px 24px hsla(235, 32%, 15%, 0.2);
   overflow: hidden;
-  height: auto; /* Adjust height as needed */
-  max-width: 90%; /* Adjust width as needed */
-  margin: 0 auto; /* Center horizontally */
+  height: auto; /* Default height, adjust as needed */
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .card__img {
@@ -198,6 +198,7 @@ img {
     padding: 1.5rem;
     max-width: 90%;
     margin-bottom: 2rem;
+    height: 80vh; /* Set height to 80% of viewport height */
   }
   .card__img {
     width: 160px;
