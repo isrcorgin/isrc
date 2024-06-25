@@ -46,13 +46,13 @@
   <div class="card">
     <div class="card__container" style="display: flex; align-items: center; justify-content: center;">
       <article class="card__article">
-        <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 1rem;">
+        <img class="logo" src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="">
         <div class="card__data" style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
           <img src="assets/img/badge1.png" alt="card image" class="card__img" id="badge-img">
           <h2 class="card__rank card__img" id="badge-rank"></h2>
           <h1 class="card__title">Loading...</h1>
           <p class="card__description">Loading...</p>
-          <div id="qrcode" style="margin-top: 1rem; border: 3px solid white; display: flex; justify-content: center; align-items: center; width: 128px; height: 128px; border-radius: 3px;"></div> <!-- QR Code container -->
+          <div id="qrcode" class="qr" ></div> <!-- QR Code container -->
         </div>
         
         <div class="card__shapes">
@@ -146,8 +146,8 @@
             // Generate QR code for the current URL with a white border and black background
             const qrcode = new QRCode(document.getElementById("qrcode"), {
               text: window.location.href,
-              width: 128,
-              height: 128,
+              width: 108,
+              height: 108,
               colorDark: "#111322",
               colorLight: "#ffffff",
               correctLevel: QRCode.CorrectLevel.H,
