@@ -8,6 +8,38 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
+  <!-- HTML to PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<style>
+  .mk{
+    
+    display: inline-block;
+                outline: 0;
+                border: 0;
+                font-size: 20px;
+                font-weight: 500;
+                color: #fff;
+                cursor: pointer;
+                background-image: linear-gradient(to right,#e052a0,#f15c41)!important;
+                border-radius: 3px;
+                padding: 16px 18px 15px;
+                white-space: nowrap;
+  }
+                .mk:hover {
+                    background-color: #e6375a;
+                    background-image: none!important;
+                }
+                
+                #download-pdf-container {
+  display: none; /* Hide by default */
+}
+
+@media screen and (max-width: 768px) {
+  #download-pdf-container {
+    display: flex;
+  }
+}
+</style>
   <title>Responsive card hover effects - Bedimcode</title>
 </head>
 <body>
@@ -16,7 +48,7 @@
       <article class="card__article">
         <img src="assets/img/isrclogo (2).png" alt="ISRC LOGO" style="width: 12rem; margin-bottom: 1rem;">
         <div class="card__data" style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
-          <img src="assets/img/default.png" alt="card image" class="card__img" id="badge-img">
+          <img src="assets/img/badge1.png" alt="card image" class="card__img" id="badge-img">
           <h2 class="card__rank card__img" id="badge-rank"></h2>
           <h1 class="card__title">Loading...</h1>
           <p class="card__description">Loading...</p>
@@ -34,6 +66,9 @@
           <span class="card__shape"></span>
         </div>
       </article>
+    </div>
+    <div id="download-pdf-container" style="position: fixed; bottom: 20px; width: 100%; display: flex; justify-content: center;">
+      <button id="download-pdf-bottom" class="mk">Download PDF</button>
     </div>
   </div>
 
@@ -128,6 +163,44 @@
         console.error("name1 parameter not found in URL");
       }
     });
+
+    function downloadPDF() {
+  const element = document.querySelector('.card__article');
+  const options = {
+    filename: 'card_article.pdf',
+    jsPDF: { format: 'a4', orientation: 'portrait' },
+    html2canvas: { scale: 1 },
+    margin: 10,
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+    image: { type: 'jpeg', quality: 0.98 },
+    jsPDFCustomizer: function (doc) {
+      const width = doc.internal.pageSize.width;
+      const height = doc.internal.pageSize.height;
+      
+      // Increase text size
+      doc.setFontSize(16); // Example, adjust as needed
+      
+      // Scale the QR code to be larger
+      const qrCodeElement = document.getElementById("qrcode canvas");
+      const qrCodeScale = 2; // Increase QR code size
+      doc.addImage(qrCodeElement.toDataURL('image/jpeg', 1.0), 'JPEG', 50, 160, 100 * qrCodeScale, 100 * qrCodeScale);
+      
+      // Append "Welcome to ISRC" text at the end
+      doc.setFontSize(14); // Example, adjust as needed
+      doc.text('Welcome to ISRC', width / 2, height - 20, { align: 'center' });
+    }
+  };
+
+  html2pdf()
+    .set(options)
+    .from(element)
+    .save();
+}
+
+
+// Event listener for the download button
+document.getElementById('download-pdf-bottom').addEventListener('click', downloadPDF);
+
   </script>
   
 </body>
