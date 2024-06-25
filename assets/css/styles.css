@@ -1,5 +1,6 @@
 /*=============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
+
 /*=============== VARIABLES CSS ===============*/
 :root {
   /*========== Colors ==========*/
@@ -26,10 +27,16 @@
 }
 
 body {
-  
   font-family: var(--body-font);
   color: var(--text-color);
- 
+  background: var(--body-gradient);
+  background-size: cover; /* Ensure background covers the entire screen */
+  background-attachment: fixed; /* Ensure background stays fixed during scrolling */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  margin: 0; /* Remove default margin */
 }
 
 img {
@@ -43,7 +50,7 @@ img {
 .card {
   display: grid;
   place-items: center;
-  background: var(--body-gradient);
+  background: none; /* Removed background to prevent overlapping with body background */
   padding-block: 4.5rem;
 }
 .card__container {
@@ -51,7 +58,6 @@ img {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 2rem;
-
   justify-items: center; /* Centers items horizontally */
   align-items: center;   /* Centers items vertically */
 }
